@@ -1,12 +1,17 @@
 #include <Arduino.h>
 #include <Encoder.h>
 #include "Motor.h"
-#include "Drive.h"
-#include "PID.h"
 #include "MotorData.h"
+#include "DualMotorData.h"
 
-Motor rightMotor(9, 10, 7, 2, 3);
+
+Motor rightMotor(8, 9, 11, 3, 5, 1.2, 0.8, 0.05);
+Motor leftMotor(6, 7, 10, 2, 4, 1.0, 0.0, 0.0);
 MotorData rightMotorData(rightMotor);
+MotorData leftMotorData(leftMotor);
+DualMotorData dualMotorData(rightMotor, leftMotor);
+
+
 
 
 void setup() {
@@ -14,6 +19,6 @@ void setup() {
 }
 
 void loop() {
-  rightMotorData.speedData();
-  while(1);
-}
+  rightMotor.movePID(300);
+  // leftMotor.movePID(600);
+} 
