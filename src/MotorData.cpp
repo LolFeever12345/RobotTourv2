@@ -11,8 +11,7 @@ void MotorData::speedData() {
         motor.forward(currentPWM);
         delay(5000); // Run motor for 5 seconds
         motor.stop();
-        Serial.print("PWM: "); Serial.print(currentPWM);
-        Serial.print(" Speed: "); Serial.println(motor.rpm(5.0));
+        Serial.print(currentPWM);Serial.print(",");Serial.println(motor.distance()/5.0);
         motor.resetEncoder();
         delay(1000);
     }

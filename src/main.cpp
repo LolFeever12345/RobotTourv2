@@ -5,8 +5,8 @@
 #include "DualMotorData.h"
 
 
-Motor rightMotor(8, 9, 11, 3, 5, 1.2, 0.8, 0.05);
-Motor leftMotor(6, 7, 10, 2, 4, 1.0, 0.0, 0.0);
+Motor rightMotor(8, 9, 11, 3, 5, 1.2, 0.8, 0.004);
+Motor leftMotor(6, 7, 10, 2, 4, 1.2, 0.0, 0.0);
 MotorData rightMotorData(rightMotor);
 MotorData leftMotorData(leftMotor);
 DualMotorData dualMotorData(rightMotor, leftMotor);
@@ -19,6 +19,9 @@ void setup() {
 }
 
 void loop() {
-  rightMotor.movePID(300);
-  // leftMotor.movePID(600);
+  long now = millis();
+  if(now < 10000){
+    leftMotor.movePID(200);
+  }
+  leftMotor.stop();
 } 
