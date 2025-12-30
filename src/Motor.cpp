@@ -41,7 +41,7 @@ void Motor::movePID(long speed) {
     //Delta Time Computation
     unsigned long currentTime = millis();
     dt = (currentTime - prevTime)/1000.0; // in seconds
-    if(dt < 0.008) return; // prevent division by zero
+    if(dt < 0.01) return; // prevent division by zero
     prevTime = currentTime;
 
     // Compute Actual Speed
@@ -54,7 +54,7 @@ void Motor::movePID(long speed) {
     // Compute PID
     float error = speed - currentSpeed;
     integral += error * dt;
-    integral = constrain(integral, -255.0f, 255.0f); // Anti-windup
+    // integral = constrain(integral, -255.0f, 255.0f); // Anti-windup
 
     float derivative = (error - prevError) / dt;
     derivative = 0.9*prevDerivative + 0.1*derivative; // Low-pass filter
@@ -67,15 +67,15 @@ void Motor::movePID(long speed) {
     //Compute PWM and direction from sign
 
     if(output >= 0) {
-        output = constrain(output, 30.0f, 255.0f); // Minimum PWM to overcome static friction
+        output = constrain(output, 60.0f, 255.0f); // Minimum PWM to overcome static friction
         forward((int)output);
     } else {
-        output = constrain(output, -255.0f, -30.0f); // Minimum PWM to overcome static friction
+        output = constrain(output, -255.0f, -60.0f); // Minimum PWM to overcome static friction
         backward((int)(-output));
     }
     // Serial.print("Current Speed: ");Serial.print(currentSpeed);Serial.print(" , ");Serial.println(output);
     // Serial.print("Target Speed: ");Serial.print(speed);Serial.print(" Error: ");Serial.println(error);
-    Serial.print(currentTime);Serial.print(",");Serial.println(currentSpeed);
+    Serial.print(currentTime);Serial.print(",");Serial.print(currentSpeed);Serial.print(",");Serial.println(output);
 
 
 }
